@@ -5547,6 +5547,8 @@ class Instructions : public Object {
   void set_stats(CodeStatistics* stats) const;
 
  private:
+  friend struct RelocatorTestHelper;
+  
   void SetSize(intptr_t value) const {
     ASSERT(value >= 0);
     StoreNonPointer(&raw_ptr()->size_and_flags_,
@@ -6548,6 +6550,7 @@ class Code : public Object {
 
   friend class ObjectLayout;  // For ObjectLayout::SizeFromClass().
   friend class CodeLayout;
+  friend struct RelocatorTestHelper;
   enum {
     kOptimizedBit = 0,
     kForceOptimizedBit = 1,

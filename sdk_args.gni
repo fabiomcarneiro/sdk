@@ -22,7 +22,7 @@ declare_args() {
 
   # Whether to enable the SDK hash check that will prevent loading a kernel
   # into a VM which was built with a different SDK.
-  verify_sdk_hash = true
+  verify_sdk_hash = false
 }
 
 # The SDK hash to build into VM and kernels.

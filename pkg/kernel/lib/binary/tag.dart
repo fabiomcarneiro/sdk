@@ -180,7 +180,12 @@ const String sdkHashNull = '0000000000';
 // If null, local development setting (e.g. run gen_kernel.dart from source),
 // we put 0x00..00 into when producing, do not validate when consuming.
 String get expectedSdkHash {
-  return sdkHashNull;
+  final sdkHash =
+      const String.fromEnvironment('sdk_hash', defaultValue: sdkHashNull);
+  if (sdkHash.length != sdkHashLength) {
+    throw '-Dsdk_hash=<hash> must be a ${sdkHashLength} byte string!';
+  }
+  return sdkHash;
 }
 
 bool isValidSdkHash(String sdkHash) {

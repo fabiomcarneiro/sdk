@@ -30,8 +30,7 @@ const char* Version::CommitString() {
 }
 
 const char* Version::SdkHash() {
-  char* kSdkHashNull = "0000000000";
-  return kSdkHashNull;
+  return git_short_hash_;
 }
 
 const char* Version::snapshot_hash_ = "{{SNAPSHOT_HASH}}";

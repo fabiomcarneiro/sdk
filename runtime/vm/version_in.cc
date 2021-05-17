@@ -11,7 +11,6 @@ namespace dart {
 
 // TODO(iposva): Avoid racy initialization.
 static const char* formatted_version = NULL;
-static const char* kSdkHashNull = "0000000000";
 
 const char* Version::String() {
   if (formatted_version == NULL) {
@@ -31,6 +30,7 @@ const char* Version::CommitString() {
 }
 
 const char* Version::SdkHash() {
+  char* kSdkHashNull = "0000000000";
   return kSdkHashNull;
 }
 

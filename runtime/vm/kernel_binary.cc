@@ -130,17 +130,6 @@ std::unique_ptr<Program> Program::ReadFrom(Reader* reader, const char** error) {
     return nullptr;
   }
 
-  uint8_t sdkHash[kSdkHashSizeInBytes + 1];
-  reader->ReadBytes(sdkHash, kSdkHashSizeInBytes);
-  sdkHash[kSdkHashSizeInBytes] = 0;  // Null terminate.
-  if (strcmp(Version::SdkHash(), kSdkHashNull) != 0 &&
-      strcmp((const char*)sdkHash, kSdkHashNull) != 0 &&
-      strcmp((const char*)sdkHash, Version::SdkHash()) != 0) {
-    if (error != nullptr) {
-      *error = kKernelInvalidSdkHash;
-    }
-    return nullptr;
-  }
 
   std::unique_ptr<Program> program(new Program());
   program->binary_version_ = formatVersion;

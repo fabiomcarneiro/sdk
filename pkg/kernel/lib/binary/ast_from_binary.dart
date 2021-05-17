@@ -497,10 +497,7 @@ class BinaryBuilder {
   }
 
   void _readAndVerifySdkHash() {
-    final sdkHash = ascii.decode(readBytes(sdkHashLength));
-    if (!isValidSdkHash(sdkHash)) {
-      throw InvalidKernelSdkVersionError(sdkHash);
-    }
+    return;
   }
 
   /// Deserializes a kernel component and stores it in [component].

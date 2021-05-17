@@ -85,9 +85,7 @@ const char* kKernelInvalidBinaryFormatVersion =
     "Invalid kernel binary format version";
 const char* kKernelInvalidSizeIndicated =
     "Invalid kernel binary: Indicated size is invalid";
-const char* kKernelInvalidSdkHash = "Invalid SDK hash";
 
-const int kSdkHashSizeInBytes = 10;
 const char* kSdkHashNull = "0000000000";
 
 std::unique_ptr<Program> Program::ReadFrom(Reader* reader, const char** error) {

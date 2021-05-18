@@ -40,12 +40,7 @@ VM_SNAPSHOT_FILES = [
 
 
 def MakeSnapshotHashString():
-    vmhash = hashlib.md5()
-    for vmfilename in VM_SNAPSHOT_FILES:
-        vmfilepath = os.path.join(utils.DART_DIR, 'runtime', 'vm', vmfilename)
-        with open(vmfilepath, 'rb') as vmfile:
-            vmhash.update(vmfile.read())
-    return vmhash.hexdigest()
+    return "8ee4ef7a67df9845fba331734198a953"
 
 
 def GetSemanticVersionFormat(no_git_hash):

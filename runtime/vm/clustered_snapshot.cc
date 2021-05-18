@@ -6545,27 +6545,14 @@ char* SnapshotHeaderReader::VerifyVersion() {
   ASSERT(expected_version != NULL);
   const intptr_t version_len = strlen(expected_version);
   if (stream_.PendingBytes() < version_len) {
-    const intptr_t kMessageBufferSize = 128;
-    char message_buffer[kMessageBufferSize];
-    Utils::SNPrint(message_buffer, kMessageBufferSize,
-                   "No full snapshot version found, expected '%s'",
-                   expected_version);
-    return BuildError(message_buffer);
+    return nullptr;
   }
 
   const char* version =
       reinterpret_cast<const char*>(stream_.AddressOfCurrentPosition());
   ASSERT(version != NULL);
   if (strncmp(version, expected_version, version_len) != 0) {
-    const intptr_t kMessageBufferSize = 256;
-    char message_buffer[kMessageBufferSize];
-    char* actual_version = Utils::StrNDup(version, version_len);
-    Utils::SNPrint(message_buffer, kMessageBufferSize,
-                   "Wrong %s snapshot version, expected '%s' found '%s'",
-                   (Snapshot::IsFull(kind_)) ? "full" : "script",
-                   expected_version, actual_version);
-    free(actual_version);
-    return BuildError(message_buffer);
+    return nullptr;
   }
   stream_.Advance(version_len);
 
@@ -6588,17 +6575,6 @@ char* SnapshotHeaderReader::VerifyFeatures(Isolate* isolate) {
 
   if (features_length != expected_len ||
       (strncmp(features, expected_features, expected_len) != 0)) {
-    const intptr_t kMessageBufferSize = 1024;
-    char message_buffer[kMessageBufferSize];
-    char* actual_features = Utils::StrNDup(
-        features, features_length < 1024 ? features_length : 1024);
-    Utils::SNPrint(message_buffer, kMessageBufferSize,
-                   "Snapshot not compatible with the current VM configuration: "
-                   "the snapshot requires '%s' but the VM has '%s'",
-                   actual_features, expected_features);
-    free(const_cast<char*>(expected_features));
-    free(actual_features);
-    return BuildError(message_buffer);
   }
   free(const_cast<char*>(expected_features));
   return nullptr;
@@ -6610,8 +6586,6 @@ char* SnapshotHeaderReader::ReadFeatures(const char** features,
       reinterpret_cast<const char*>(stream_.AddressOfCurrentPosition());
   const intptr_t length = Utils::StrNLen(cursor, stream_.PendingBytes());
   if (length == stream_.PendingBytes()) {
-    return BuildError(
-        "The features string in the snapshot was not '\\0'-terminated.");
   }
   *features = cursor;
   *features_length = length;
